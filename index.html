@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carômetro - Monitoramento de Alunos</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+</head>
+<body>
+
+  <!-- ========== SIDEBAR ========== -->
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="16" cy="13" r="5" stroke="#a78bfa" stroke-width="2.5"/>
+            <path d="M8 26c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="#a78bfa" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <span class="logo-text">Carômetro</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active" onclick="filtrar('todos'); return false;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/>
+          </svg>
+          <span>Painel</span>
+        </a>
+        <a href="#" class="nav-item" onclick="filtrar('A'); return false;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+          </svg>
+          <span>Turma A</span>
+        </a>
+        <a href="#" class="nav-item" onclick="filtrar('B'); return false;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 00-3-3.87"/>
+            <path d="M16 3.13a4 4 0 010 7.75"/>
+          </svg>
+          <span>Turma B</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="sidebar-bottom">
+      <div class="sidebar-info">
+        <span class="info-dot"></span>
+        <span>Sistema Ativo</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ========== CONTEUDO PRINCIPAL ========== -->
+  <div class="main-wrapper">
+
+    <!-- ========== TOP BAR ========== -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <h2 class="page-title">Painel de Alunos</h2>
+        <span class="page-subtitle">Monitoramento e Identificação</span>
+      </div>
+      <div class="topbar-right">
+        <div class="search-box">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="M21 21l-4.35-4.35"/>
+          </svg>
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Buscar aluno..."
+          />
+        </div>
+      </div>
+    </header>
+
+    <!-- ========== STATS ========== -->
+    <section class="stats-row">
+      <div class="stat-card stat-total">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 00-3-3.87"/>
+            <path d="M16 3.13a4 4 0 010 7.75"/>
+          </svg>
+        </div>
+        <div class="stat-info">
+          <span class="stat-number" id="statTotal">12</span>
+          <span class="stat-label">Total de Alunos</span>
+        </div>
+      </div>
+      <div class="stat-card stat-turma-a">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <div class="stat-info">
+          <span class="stat-number" id="statTurmaA">6</span>
+          <span class="stat-label">Turma A</span>
+        </div>
+      </div>
+      <div class="stat-card stat-turma-b">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <div class="stat-info">
+          <span class="stat-number" id="statTurmaB">6</span>
+          <span class="stat-label">Turma B</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== FILTER PILLS ========== -->
+    <section class="filter-section">
+      <div class="filter-pills">
+        <button class="pill active" data-filter="todos" onclick="filtrar('todos')">Todos</button>
+        <button class="pill" data-filter="A" onclick="filtrar('A')">Turma A</button>
+        <button class="pill" data-filter="B" onclick="filtrar('B')">Turma B</button>
+      </div>
+    </section>
+
+    <!-- ========== GRID DE ALUNOS ========== -->
+    <main class="main">
+      <div class="cards-grid" id="cardsGrid">
+        <!-- Cards gerados via JavaScript -->
+      </div>
+
+      <!-- Mensagem quando nenhum resultado -->
+      <div class="no-results" id="noResults" style="display:none;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M8 15s1.5-2 4-2 4 2 4 2"/>
+          <line x1="9" y1="9" x2="9.01" y2="9"/>
+          <line x1="15" y1="9" x2="15.01" y2="9"/>
+        </svg>
+        <p>Nenhum aluno encontrado.</p>
+      </div>
+    </main>
+  </div>
+
+  <!-- ========== MODAL DE DETALHES ========== -->
+  <div class="modal-overlay" id="modalOverlay" onclick="fecharModal()">
+    <div class="modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="fecharModal()">&times;</button>
+      <div class="modal-body">
+        <div class="modal-photo">
+          <img id="modalFoto" src="" alt="Foto do aluno" />
+        </div>
+        <div class="modal-info">
+          <span class="modal-turma" id="modalTurma"></span>
+          <h2 id="modalNome"></h2>
+          <div class="modal-details">
+            <div class="detail-item">
+              <span class="detail-label">Número</span>
+              <span class="detail-value" id="modalNumero"></span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Turma</span>
+              <span class="detail-value" id="modalTurmaText"></span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">Posto de Trabalho</span>
+              <span class="detail-value" id="modalPosto"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/dados.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
