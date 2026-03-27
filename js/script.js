@@ -10,12 +10,10 @@ let filtroAtual = "todos";
 const cardsGrid = document.getElementById("cardsGrid");
 const noResults = document.getElementById("noResults");
 const searchInput = document.getElementById("searchInput");
-const headerStats = document.getElementById("headerStats");
 const modalOverlay = document.getElementById("modalOverlay");
 
 // ---- Inicialização ----
 document.addEventListener("DOMContentLoaded", function () {
-  renderizarEstatisticas();
   renderizarCards(alunos);
 
   // Busca em tempo real
@@ -29,26 +27,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-// ---- Renderizar estatísticas no header ----
-function renderizarEstatisticas() {
-  const total = alunos.length;
-  const turmaA = alunos.filter(function (a) { return a.turma === "A"; }).length;
-  const turmaB = alunos.filter(function (a) { return a.turma === "B"; }).length;
-
-  headerStats.innerHTML =
-    '<div class="stat-badge">' +
-      '<span class="stat-number">' + total + '</span>' +
-      '<span class="stat-label">Total</span>' +
-    '</div>' +
-    '<div class="stat-badge">' +
-      '<span class="stat-number">' + turmaA + '</span>' +
-      '<span class="stat-label">Turma A</span>' +
-    '</div>' +
-    '<div class="stat-badge">' +
-      '<span class="stat-number">' + turmaB + '</span>' +
-      '<span class="stat-label">Turma B</span>' +
-    '</div>';
-}
 
 // ---- Criar HTML de um card ----
 function criarCard(aluno) {
@@ -100,12 +78,23 @@ function renderizarCards(lista) {
 function filtrar(turma) {
   filtroAtual = turma;
 
-  // Atualizar botões ativos
-  var botoes = document.querySelectorAll(".filter-btn");
-  botoes.forEach(function (btn) {
+  // Atualizar pills ativos
+  var pills = document.querySelectorAll(".pill");
+  pills.forEach(function (btn) {
     btn.classList.remove("active");
     if (btn.getAttribute("data-filter") === turma) {
       btn.classList.add("active");
+    }
+  });
+
+  // Atualizar sidebar nav
+  var navItems = document.querySelectorAll(".nav-item");
+  navItems.forEach(function (item, index) {
+    item.classList.remove("active");
+    if ((turma === "todos" && index === 0) ||
+        (turma === "A" && index === 1) ||
+        (turma === "B" && index === 2)) {
+      item.classList.add("active");
     }
   });
 
@@ -150,7 +139,7 @@ function abrirModal(aluno) {
 
   var turmaBadge = document.getElementById("modalTurma");
   turmaBadge.textContent = "Turma " + aluno.turma;
-  turmaBadge.style.background = aluno.turma === "A" ? "var(--cor-turma-a)" : "var(--cor-turma-b)";
+  turmaBadge.style.background = aluno.turma === "A" ? "var(--turma-a)" : "var(--turma-b)";
 
   modalOverlay.classList.add("active");
   document.body.style.overflow = "hidden";
